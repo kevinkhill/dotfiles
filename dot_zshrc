@@ -2,6 +2,8 @@ source ~/.zplug/init.zsh
 
 export EDITOR="vim"
 
+[ -f ~/.zsh_aliases ] && source ~/.zsh_aliases
+
 # Actually install plugins, prompt user input
 if ! zplug check --verbose; then
     printf "Install zplug plugins? [y/N]: "
