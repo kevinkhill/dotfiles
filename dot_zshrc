@@ -1,0 +1,49 @@
+source ~/.zplug/init.zsh
+
+export EDITOR="vim"
+
+# Actually install plugins, prompt user input
+if ! zplug check --verbose; then
+    printf "Install zplug plugins? [y/N]: "
+    if read -q; then
+        echo; zplug install
+    fi
+fi
+
+# Make sure to use double quotes
+zplug "zsh-users/zsh-history-substring-search"
+zplug "zsh-users/zsh-autosuggestions"
+zplug "zimfw/git-info"
+
+zplug "junegunn/fzf-bin", \
+    from:gh-r, \
+    as:command, \
+    rename-to:fzf, \
+    use:"*amd64*"
+
+# Async for zsh, used by pure
+zplug "mafredri/zsh-async", from:github, defer:0
+
+# Load completion library for those sweet [tab] squares
+zplug "lib/completion", from:oh-my-zsh
+
+# Syntax highlighting for commands, load last
+zplug "zsh-users/zsh-syntax-highlighting", from:github, defer:3
+
+# Theme!
+# zplug "sindresorhus/pure", use:pure.zsh, from:github, as:theme
+zplug "zimfw/steeef", from:github, as:theme
+
+zplug load
+
+
+# Better history
+# Credits to https://coderwall.com/p/jpj_6q/zsh-better-history-searching-with-arrow-keys
+autoload -U up-line-or-beginning-search
+autoload -U down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+bindkey "^[[A" up-line-or-beginning-search # Up
+bindkey "^[[B" down-line-or-beginning-search # Down
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
